@@ -52,10 +52,10 @@ def detect_pii_with_regex(content):
     return results
 
 # api 탐지
-def detect_sensitive_info_with_chatgpt(content, additional_info):
+def detect_sensitive_info_with_chatgpt(content, additional_info):  # content로 문서 내용을 받아 챗 지피티로 추가로 탐지
     prompt = f"""
     다음 텍스트에서 개인정보 및 추가 요청된 정보를 찾아주세요:
-    - 개인정보에는 연락처, 이메일, 주민등록번호, 주소, 계좌번호 등이 포함됩니다.
+    - 개인정보에는 연락처, 이메일, 주민등록번호, 주소, 계좌번호 등 개인을 특정할 수 있는 정보가 포함됩니다.
     - 추가 요청 정보: {additional_info}
     
     반환 형식:
@@ -90,7 +90,7 @@ def save_to_mongodb(file_name, file_content, regex_results, chatgpt_results):
         "file_name": file_name,
         "file_content": file_content,  # 전체 문서 내용
         "regex_results": regex_results,  # 정규표현식 탐지 결과
-        "chatgpt_results": chatgpt_results  # ChatGPT 탐지 결과
+        "chatgpt_results": chatgpt_results  # ChatGPT 탐지 결과 -> 추가 탐지 결과
     }
     collection.insert_one(document)
 
